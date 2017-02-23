@@ -6,17 +6,20 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author ra21551794
+ * @author RA21551794
  */
-public class CarregaPincel extends HttpServlet {
+public class ConsultaPincel extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,29 +35,31 @@ public class CarregaPincel extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ConsultaPincel</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ConsultaPincel at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
             
-            int idPincel = 5;
             
-            Pincel pincel0;
-            //Buscar do banco
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            Session s = HibernateUtil.getSessionFactory().openSession();
             
-            pincel0 = (Pincel) sessao.get(Pincel.class, idPincel);
+            Criteria criteria = s.createCriteria(Pincel.class);
+            criteria.add(Restrictions.eq("cor", "vermelho"));
             
-            if(pincel0 != null){
+            List<Pincel> result = criteria.list();
             
-            out.println("Dados do pincel 0:");
-            out.println("cor: " + pincel0.getCor());
-            out.println("fabricante: " + pincel0.getFabricante());
-            out.println("num_serie: " + pincel0.getNum_serie());
-            } else {
-                out.println("Não encontrei o pincel de id: " + idPincel);
+            out.println("Pinceis encontrados: <br>");
+            for(Pincel p : result){
+                out.println("<br> Pincel num:" + p.getNum_serie());
+                out.println("<br> cor:" + p.getCor());
             }
             
-            
-            
-            
-           
+            s.close();
         }
     }
 

@@ -37,7 +37,7 @@ public class SalvarPincel extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             Pincel p1 = new Pincel();
-            p1.setCor("azul");
+            p1.setCor("vermelho");
             p1.setFabricante("Pilot");
             p1.setNum_serie(10254);
             

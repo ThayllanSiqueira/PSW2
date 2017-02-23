@@ -6,7 +6,7 @@
     <property name="hibernate.connection.username">app</property>
     <property name="hibernate.connection.password">app</property>
     <property name="hibernate.connection.url">jdbc:derby://localhost:1527/sample</property>
-    <property name="hibernate.hbm2ddl.auto">create</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="Pincel"/>
   </session-factory>
 </hibernate-configuration>
