@@ -8,5 +8,6 @@
     <property name="hibernate.connection.username">app</property>
     <property name="hibernate.connection.password">app</property>
     <mapping class="Pincel"/>
+    <mapping class="Fabricante"/>
   </session-factory>
 </hibernate-configuration>

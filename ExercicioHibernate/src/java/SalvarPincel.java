@@ -34,10 +34,17 @@ public class SalvarPincel extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
               
             try{
+                
+                Integer idFab = Integer.parseInt(request.getParameter("fab"));
+                
+                Fabricante f = new Fabricante();
+                f.setId(idFab);
+                
                 Pincel p1 = new Pincel();
 
                 p1.setCor(request.getParameter("cor"));
-                p1.setFabricante(request.getParameter("fab"));
+                p1.setFabricante(f);
+                
                 String num = request.getParameter("num");
                 if(num != null){
                     Integer numi = Integer.parseInt(num);
@@ -49,12 +56,19 @@ public class SalvarPincel extends HttpServlet {
                                     .openSession();
 
                 Transaction tx = sessao.beginTransaction();
-
-                sessao.save(p1);
-                sessao.flush();
+                
+                try{
+                    //sessao.save(f);
+                    sessao.save(p1);
+                    sessao.flush();
 
                 tx.commit();
-
+                } catch(Exception e){
+                    System.out.println("Error" + e.getMessage());
+                    e.printStackTrace();
+                    tx.rollback();
+                }
+                
                 sessao.close();
                 
                 out.println("Registro inserido com sucesso!");

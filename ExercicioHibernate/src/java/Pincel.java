@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,8 +24,9 @@ public class Pincel {
     private int identificador;
     
     private String cor;
-    private String fabricante;
     
+    @ManyToOne
+    private Fabricante fabricante;
     
     private int num_serie;
 
@@ -37,9 +39,6 @@ public class Pincel {
     }
 
     
-    
-    
-    
     public String getCor() {
         return cor;
     }
@@ -48,11 +47,11 @@ public class Pincel {
         this.cor = cor;
     }
 
-    public String getFabricante() {
+    public Fabricante getFabricante() {
         return fabricante;
     }
 
-    public void setFabricante(String fabricante) {
+    public void setFabricante(Fabricante fabricante) {
         this.fabricante = fabricante;
     }
 
