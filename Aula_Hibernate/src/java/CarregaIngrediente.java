@@ -7,20 +7,16 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
- * @author ra21551794
+ * @author Thayllan
  */
-@WebServlet(urlPatterns = {"/SalvarPincel"})
-public class SalvarPincel extends HttpServlet {
+public class CarregaIngrediente extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,35 +31,40 @@ public class SalvarPincel extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            Pincel p1 = new Pincel();
-            p1.setCor("vermelho");
-            p1.setFabricante("Pilot");
-            p1.setNum_serie(10254);
-            
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
-            
-            Transaction tx = sessao.beginTransaction();
-            try{
-                sessao.save(p1);
-                sessao.flush();
-                tx.commit();
-            } catch (Exception e){
-                tx.rollback();
-            }
-            sessao.close();
-            
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SalvarPincel</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SalvarPincel at " + request.getContextPath() + "</h1>");
-            out.println("<h1>kkkkk " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+           
+            Integer idIngrediente;
+            
+            if(request.getParameter("chave") == null || request.getParameter("chave").equals("")) {
+                out.println("Favor informar um id");
+            } else {
+                
+                idIngrediente = Integer.parseInt(request.getParameter("chave"));
+                
+                try{
+
+                    Ingrediente ingrediente;
+
+                    Session sessao = HibernateUtil.getSessionFactory().openSession();
+
+                    ingrediente = (Ingrediente) sessao.get(Ingrediente.class, idIngrediente);
+
+                    if(ingrediente == null) {
+                       out.println("Nao encontrei o ingrediente de id: " + idIngrediente);
+                    }
+                    else {
+
+                        out.println("Dados do Ingrediente :" + idIngrediente + " ");
+                        out.println("Nome:" + ingrediente.getNome());
+                        out.println("Quantidade: " + ingrediente.getQtd());
+                        out.println("Valor: " + ingrediente.getValor());
+                    }
+                } catch (Exception ex){
+                    out.println("Erro ao buscar ingrediente: " + ex.getMessage());
+                }
+            }
+            
+            
         }
     }
 

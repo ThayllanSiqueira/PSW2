@@ -17,9 +17,9 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author RA21551794
+ * @author Thayllan
  */
-public class ConsultaPincel extends HttpServlet {
+public class ConsultaIngrediente extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,31 +35,30 @@ public class ConsultaPincel extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ConsultaPincel</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ConsultaPincel at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
             
-            
-            Session s = HibernateUtil.getSessionFactory().openSession();
-            
-            Criteria criteria = s.createCriteria(Pincel.class);
-            criteria.add(Restrictions.eq("cor", "vermelho"));
-            
-            List<Pincel> result = criteria.list();
-            
-            out.println("Pinceis encontrados: <br>");
-            for(Pincel p : result){
-                out.println("<br> Pincel num:" + p.getNum_serie());
-                out.println("<br> cor:" + p.getCor());
+        try{    
+            String ing = request.getParameter("ing");
+
+                Session s = HibernateUtil.getSessionFactory().openSession();
+                
+                Criteria criteria = s.createCriteria(Ingrediente.class);
+                criteria.add(Restrictions.eq("nome", ing));
+                
+                List<Ingrediente> result = criteria.list();
+                
+                out.println("ingredientes encontrados ("+ result.size() + "): <br>");
+                
+                for(Ingrediente i : result){
+                    out.println("<br>Ingrediente:" + i.getNome());
+                    out.println("<br>Qtds :" + i.getQtd());
+                    out.println("<br>Valor :" + i.getValor());
+                    out.println("<br>");
+                }
+                
+                s.close();
+            } catch (Exception ex){
+                out.println("Erro na busca: " + ex.getMessage());
             }
-            
-            s.close();
         }
     }
 
