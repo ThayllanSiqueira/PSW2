@@ -1,0 +1,46 @@
+Projeto de Sistemas WEB 2
+Avaliação I
+Hibernate
+
+Instruções:
+
+As respostas das questões teoricas devem ser dadas nesse arquivo texto e enviadas para seu github em um NOVO REPOSITORIO chamado AVALIACAO_DDMMAAAA onde DDMMAAAA deve ser substituido pela data de hoje.
+Essas respostas devem ser sucintas. No maximo duas linhas!
+
+A parte prática deve ser entregue no mesmo repositório. 
+Envie todos os arquivos que julgar necessário.
+A habilidade de utilizar um repositório de código como o github também é objeto de avaliação.
+
+Questões:
+
+1 - Qual a utilidade do arquivo hibernate.cfg.xml? Ele é dispensável para o funcionamento do hibernate? Que tipo de informação ele contém?
+	Ele é o arquivo de configurações para o funcionamento do hibernate é nele que se faz o mapeamento das classes para a construção do Banco! Ele é indespensável pois
+	contem as configurações necessarias para o funcionamento do hibernate!
+
+2 - Qual a utilidade da classe HibernateUtil.java?  Ela é dispensável para o funcionamento do hibernate?
+	Para auxiliar na criação das sessoes, para que haja as transações! Ela é indispensavel!
+
+3 - Quais as vantagens de se utilizar Hibernate em detrimento de um acesso ao banco usando ResultSet.
+	Mais agilidade em desenvolver o codigo!
+	
+
+4 - O que significam cada uma das anotações a seguir:
+a) @Entity = Para replicar a classe no banco de dados
+b) @Column = Para nomear a coluna com um nome diferente do atributo da classe java
+c) @Id = Destaca a chave primaria no Banco
+e) @GeneratedValue = Faz com que o atributo seja auto incrementado no banco
+
+
+
+Prática:
+
+Usando a classe que lhe foi atribuida pelo Professor, crie um CRUD simples para essa entidade.
+Voce deve implementar codigo capaz de INCLUIR e BUSCAR no banco usando Hibernate. A parte de busca DEVE usar a API Criteria.
+NÂO é necessário implementar formulários html.
+PODE ser usada uma única servlet com valores hard coded. Estou interessado em verificar se voce sabe:
+- configurar um projeto para usar hibernate
+- anotar as classes corretamente.
+- ajustar o arquivo de configuração do hibernate corretamente
+- escrever codigo java capaz de fazer insert via hibernate
+- escrever codigo java capaz de fazer select via hibernate
+_____________
