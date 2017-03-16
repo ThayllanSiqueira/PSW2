@@ -1,0 +1,2 @@
+0:0:0:0:0:0:0:1 - - [16/Mar/2017:20:31:27 -0300] "GET /MinhaServlet HTTP/1.1" 200 36 http-bio-8080-exec-1 20
+0:0:0:0:0:0:0:1 - - [16/Mar/2017:20:31:27 -0300] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8080-exec-3 2
