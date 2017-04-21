@@ -1,0 +1,280 @@
+swagger: '2.0'
+info:
+  title: Piadas API
+  description: Cadastro de piadas
+  version: "1.0.0"
+host: localhost:8080
+schemes:
+  - http
+produces:
+  - application/json
+paths:
+  /piada:
+    get:
+      summary: Lista as piadas
+      parameters:
+        - name: safe
+          in: query
+          description: indica se a deve excluir as piadas adultas.
+          required: false
+          type: boolean
+        - name: palavra
+          in: query
+          description: palavra chave para filtrar as piadas.
+          required: false
+          type: string
+      responses:
+        200:
+          description: Um array de piadas
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Piada'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      parameters:
+        - name: piada
+          in: body
+          schema:
+            $ref: '#/definitions/Piada'
+          required: true
+      responses:
+        200:
+          description: Nova piada criada
+  /piada/{id}:
+    get:
+      summary: recupera uma piada
+      parameters:
+        - in: path
+          name: id
+          description: ID da piada a ser buscada
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Uma piada
+          schema:
+            $ref: '#/definitions/Piada'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+      responses:
+        "404":
+          description: Piada nao encontrada
+        "400":
+          description: id invalido
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+        - name: piada
+          in: body
+          schema:
+            $ref: '#/definitions/Piada'
+          required: true
+      responses:
+        "405":
+          description: Validation exception
+        "404":
+          description: Piada nao encontrada
+        "400":
+          description: Invalid ID supplied
+  /piada/{id}/autor:
+    get:
+      summary: recupera o autor de uma piada
+      parameters:
+        - in: path
+          name: id
+          description: ID da piada cujo autor sera buscado
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Um autor
+          schema:
+            $ref: '#/definitions/Autor'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: atualiza o autor de uma piada
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+        - name: piada
+          in: body
+          schema:
+            $ref: '#/definitions/Autor'
+          required: true
+      responses:
+        "405":
+          description: Validation exception
+        "404":
+          description: Piada nao encontrada
+        "400":
+          description: Id Invalido
+  /autor:
+    get:
+      summary: recupera os autores cadastrados no sistema
+      parameters:
+        - in: query
+          name: mediamaxima
+          description: busca autores com media menor que mediamaxima
+          required: false
+          type: integer
+        - in: query
+          name: mediaminima
+          description: busca autores com media maior que mediaminima
+          required: false
+          type: integer          
+      responses:
+        200:
+          description: Lista de autores
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Autor'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: atualiza um autor
+      parameters:
+        - name: autor
+          in: body
+          schema:
+            $ref: '#/definitions/Autor'
+          required: true
+      responses:
+        "405":
+          description: Validation exception
+        "404":
+          description: Piada nao encontrada
+        "400":
+          description: Id Invalido
+        200:
+          description: O autor alterado
+          schema:
+            $ref: '#/definitions/Autor'                    
+    post:
+      summary: cria um autor
+      parameters:
+        - name: autor
+          in: body
+          schema:
+            $ref: '#/definitions/Autor'
+          required: true
+      responses:
+        "405":
+          description: Validation exception
+        "404":
+          description: Piada nao encontrada
+        "400":
+          description: Id Invalido
+        200:
+          description: O autor criado
+          schema:
+            $ref: '#/definitions/Autor'          
+  /autor/{id}:
+    get:
+      summary: recupera um autor
+      parameters:
+        - in: path
+          name: id
+          description: ID do autor a ser buscada
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Um autor
+          schema:
+            $ref: '#/definitions/Autor'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+      responses:
+        "404":
+          description: Autor nao encontrada
+        "400":
+          description: id invalido
+    put:
+      summary: altera um autor
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+        - name: autor
+          in: body
+          schema:
+            $ref: '#/definitions/Autor'
+          required: true
+      responses:
+        "405":
+          description: Validation exception
+        "404":
+          description: Autor nao encontrado
+        "400":
+          description: Invalid ID supplied
+        200:
+          description: Um autor alterado
+          schema:
+            $ref: '#/definitions/Autor'
+definitions:
+  Piada:
+    type: object
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+      texto:
+        type: string
+      nota:
+        type: number
+      adulta:
+        type: boolean
+      autor:
+        $ref: '#/definitions/Autor'
+  Autor:
+    type: object
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+      media:
+        type: number
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
